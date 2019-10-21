@@ -1,0 +1,42 @@
+https://docs.espressif.com/projects/esp-idf/en/latest/api-reference/protocols/esp_http_client.html
+https://docs.espressif.com/projects/esp-idf/en/latest/api-reference/protocols/esp_http_client.html#api-reference
+
+
+je pars de examples wifi getting-started --> station
+je rajoute du code POST que je trouve dans examples/protocol/esp_http_client
+attention pour avoir la def de esp_http_client_config_t (entre autre) faut activer des components/wifi http client (et what???) dans le menuconfig
+
+
+
+server local node récupérer une seule donnée true ou false mais indiquer l'heure
+se baser sur homedata
+
+
+/root/ -> gatt_log.js et dbgattlog.db
+
+
+ToDo -->
+-gatts_gpio -> avoir connexion avec android -> ok (penser que android marche pas -> fermer puis relancer l'appli)
+-importer le wifi (examples/wifi/get_started/station) dans gatts_gpio pour avoir juste connexion wifi au startup
+quand j'ajoute du wifi simplissime j'ai 
+E (523) esp_image: Image length 1070832 doesn't fit in partition length 1048576
+E (523) boot: Factory app partition is not bootable
+E (525) boot: No bootable app partitions in the partition table
+je trouve
+https://www.esp32.com/viewtopic.php?t=5549 -> [SOLVED] BLE and Wifi = out of memory ??
+dans bluedroid options je vire:
+Include GATT client module(GATTC)
+Include BLE security module(SMP)
+-> ok c'est mieux
+quand j'ajoute du code POST (c'est quand l'appel est décommenté, rigolo) je tombe sur le même pb  esp_image: Image length 1107136 doesn't fit in partition length 1048576
+je vais essayer d'écrémer  côté de la fonctionalité POST?
+dans menuconfig  http client j'enlève Enable https
+OK
+-importer le test POST dans gatts_gpio
+-tester post en local
+
+
+
+mettre le js sur kimsufi
+tester en server
+code esp: renommer en esp_gatts_conn, faire un beau readme, mettre sur github avec les infos server et le .js et ce fichier
