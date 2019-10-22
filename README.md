@@ -1,4 +1,4 @@
-#gatts pour action when connects/disconnects
+# gatts pour action when connects/disconnects
 --> led gpio
 --> http POST
 
