@@ -14,3 +14,7 @@ faire coexister BT + WIFI bouffe de la mémoire: gestion des erreurs, voir res/l
 
 le server qui reçoit la requête: voir le .js dans res/
 
+## Pour réactiver WIFI (je le vire pour revenir à GPIO en novembre 19)
+
+fin de main: décommenter le wifi_init_sta() et le vtaskdelay juste avant
+ESP_GATTS_[DIS]CONNECT_EVT -> décommenter faire_un_POST

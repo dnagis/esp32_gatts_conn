@@ -62,14 +62,14 @@ static void gatts_profile_b_event_handler(esp_gatts_cb_event_t event, esp_gatt_i
 #define GATTS_DESCR_UUID_TEST_B     0x2222
 #define GATTS_NUM_HANDLE_TEST_B     4
 
-#define TEST_DEVICE_NAME            "ESP_GATTS_DEMO"
+#define TEST_DEVICE_NAME            "DOORLOCK_1"
 #define TEST_MANUFACTURER_DATA_LEN  17
 
 #define GATTS_DEMO_CHAR_VAL_LEN_MAX 0x40
 
 #define PREPARE_BUF_MAX_SIZE 1024
 
-#define BLINK_GPIO 23
+#define BLINK_GPIO 2
 
 /**WIFI**/
 #define EXAMPLE_ESP_WIFI_SSID     "aLANnisterNeverForgets" //sinon CONFIG_ESP_WIFI_SSID
@@ -532,9 +532,9 @@ static void gatts_profile_a_event_handler(esp_gatts_cb_event_t event, esp_gatt_i
         break;
     case ESP_GATTS_CONNECT_EVT: {
         //
-        //gpio_set_level(BLINK_GPIO, 1);
+        gpio_set_level(BLINK_GPIO, 1);
         
-        faire_un_POST(49); //49=1 en ascii
+        //faire_un_POST(49); //49=1 en ascii
         
         esp_ble_conn_update_params_t conn_params = {0};
         memcpy(conn_params.bda, param->connect.remote_bda, sizeof(esp_bd_addr_t));
@@ -559,8 +559,8 @@ static void gatts_profile_a_event_handler(esp_gatts_cb_event_t event, esp_gatt_i
         break;
     }
     case ESP_GATTS_DISCONNECT_EVT:
-        //gpio_set_level(BLINK_GPIO, 0);
-        faire_un_POST(48); //48=0 en ascii
+        gpio_set_level(BLINK_GPIO, 0);
+        //faire_un_POST(48); //48=0 en ascii
         
         ESP_LOGI(GATTS_TAG, "ESP_GATTS_DISCONNECT_EVT, disconnect reason 0x%x", param->disconnect.reason);
         esp_ble_gap_start_advertising(&adv_params);
@@ -882,11 +882,11 @@ void app_main(void)
     
     gpio_pad_select_gpio(BLINK_GPIO);
     /* Set the GPIO as a push/pull output */
-    //gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
+    gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
     
     //parce que je lis que ble et wifi ça partage la meme radio...
-	vTaskDelay(3000 / portTICK_PERIOD_MS);
-	wifi_init_sta();
+	//vTaskDelay(3000 / portTICK_PERIOD_MS);
+	//wifi_init_sta();
 	
     return;
 }
