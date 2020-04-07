@@ -3,8 +3,9 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := gatts_conn
+PROJECT_NAME := gattswifi
 
-COMPONENT_ADD_INCLUDEDIRS := components/include
+EXTRA_COMPONENT_DIRS = $(IDF_PATH)/examples/common_components/protocol_examples_common
 
 include $(IDF_PATH)/make/project.mk
+
