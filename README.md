@@ -5,25 +5,28 @@
 
 bt -> esp-idf/examples/bluetooth/bluedroid/ble/gatt_server
 
-wifi protocols/esp-http-client
+wifi -> protocols/esp-http-client
 
-## wifi astuces:
+## WiFi
 
-faire coexister BT + WIFI bouffe de la mémoire: gestion des erreurs, voir res/log
+pour importer la simple helper function, `example_connect()` qui est dans common_components/ et qui simplifie la vie:
+
+	CMakeLists.txt -> set(EXTRA_COMPONENT_DIRS $ENV{IDF_PATH}/examples/common_components/protocol_examples_common)
+	Makefile -> EXTRA_COMPONENT_DIRS = $(IDF_PATH)/examples/common_components/protocol_examples_common
+	
+	***attention s'il y a déjà eu un build avant l'import ne marche pas il faut un make clean***
+
+ssid et pwd se configurent dans le menuconfig (une entrée à la racine)
+
+Attention dans component config / supplicant ne pas mettre print debug messages from WPA Supplicant, sinon le build plante
 
 le server qui reçoit la requête: voir les .js dans res/
 
+## BT + WiFi: problème de mémoire
 
+symptôme: crash au boot alors que make OK: faire coexister BT + WIFI utilise de la mémoire partition
 
-pour avoir accès à la simple helper function, `example_connect()` qui est dans common_components et qui facilite la connexion wifi: de n'importe quel dir il faut:
-CMakeLists.txt -> set(EXTRA_COMPONENT_DIRS $ENV{IDF_PATH}/examples/common_components/protocol_examples_common)
-Makefile -> EXTRA_COMPONENT_DIRS = $(IDF_PATH)/examples/common_components/protocol_examples_common
-
-ssid et pwd se settent dans le menuconfig une entrée qui est à la racine
-
-Attention dans component config / supplicant ne pas mettre print debug messages from WPA Supplicant, le build plante
-
-BT + Wifi crash au boot alors que make OK:
+gestion des erreurs, voir res/log
 esp_image: Image length 1290592 doesn't fit in partition length 1048576
 j'essaie de modifier taille partition, fichier partitions.csv à la racine du projet:
 
